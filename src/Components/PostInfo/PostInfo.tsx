@@ -1,7 +1,7 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { FullPost, Posts } from "../../types";
 import React, { useEffect, useState } from "react";
 import axiosApi from "../../axiosApi";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { FullPost, Posts } from "../../types";
 
 interface Props {
   request: () => Promise<Posts>;
@@ -10,8 +10,8 @@ interface Props {
 const PostInfo: React.FC<Props> = ({ request }) => {
   const params = useParams();
   const navigate = useNavigate();
-  const [info, setInfo] = useState<FullPost | undefined>(undefined);
-  const [postKey, setPostKey] = useState("");
+  const [data, setData] = useState<FullPost | undefined>(undefined);
+  const [postKeyId, setPostKeyId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,8 +21,8 @@ const PostInfo: React.FC<Props> = ({ request }) => {
           (post) => post.postId === params.postId
         );
         if (index !== -1) {
-          setInfo([Object.values(posts)[index]][0]);
-          setPostKey([Object.keys(posts)[index]][0]);
+          setData([Object.values(posts)[index]][0]);
+          setPostKeyId([Object.keys(posts)[index]][0]);
         }
       } catch (error) {
         throw error;
@@ -33,20 +33,20 @@ const PostInfo: React.FC<Props> = ({ request }) => {
   }, [request]);
 
   const onDelete = async () => {
-    await axiosApi.delete("posts/" + postKey + ".json");
+    await axiosApi.delete("posts/" + postKeyId + ".json");
     navigate("/");
   };
 
-  const timestamp = parseInt(info?.postId || "", 10);
+  const timestamp = parseInt(data?.postId || "", 10);
   const date = new Date(timestamp).toLocaleString();
 
   return (
-    <div className="mt-5 shadow py-5 px-4">
-      <h3>{info?.title}</h3>
-      <p>{info?.message}</p>
-      <p className="text-secondary">{date}</p>
+    <div className=" w-50 mx-auto mt-5 shadow py-5 px-4">
+      <h2 className="fw-bold">{data?.title}</h2>
+      <p>{data?.message}</p>
+      <p className="text-secondary">Date: {date}</p>
       <Link
-        className="btn btn-success me-4"
+        className="btn btn-primary me-4"
         to={"/post/" + params.postId + "/edit"}
       >
         Edit post

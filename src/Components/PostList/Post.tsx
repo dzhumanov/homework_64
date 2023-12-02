@@ -7,9 +7,9 @@ const Post: React.FC<FullPost> = ({ postId, title }) => {
   const date = new Date(timestamp).toLocaleString();
 
   return (
-    <div className="card">
+    <div className="card mt-4 w-50 mx-auto">
       <div className="card-body">
-        <h5>{title}</h5>
+        <h5 className="fw-bold">{title}</h5>
         <h6>{date}</h6>
         <Link className="btn btn-primary" to={"/post/" + postId}>
           Read more.

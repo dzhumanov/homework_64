@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axiosApi from "../../axiosApi";
 import { Post } from "../../types";
-import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -25,7 +24,7 @@ const AddForm = () => {
     event.preventDefault();
     setLoading(true);
 
-    const date = new Date().toISOString();
+    const date = new Date().getTime().toString();
 
     const newPost = {
         title: post.title,

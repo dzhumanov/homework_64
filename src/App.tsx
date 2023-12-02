@@ -5,11 +5,10 @@ import AddForm from "./Containers/AddForm/AddForm";
 import Posts from "./Containers/Posts/Posts";
 import PostInfo from "./Components/PostInfo/PostInfo";
 import fetchData from "./fetchData";
+import About from "./Containers/About/About";
+import Contacts from "./Containers/Contacts/Contacts";
 
 function App() {
-
-  
-
   return (
     <div className="app-container">
       <header>
@@ -24,6 +23,8 @@ function App() {
             path="/post/:postId"
             element={<PostInfo request={fetchData} />}
           />
+          <Route path="about" element={<About />} />
+          <Route path="contacts" element={<Contacts />} />
         </Routes>
       </main>
     </div>
