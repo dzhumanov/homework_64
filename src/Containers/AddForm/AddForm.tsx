@@ -4,6 +4,7 @@ import { Post } from "../../types";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Preloader from "../../Components/Preloader/Preloader";
 
 const AddForm = () => {
   const [post, setPost] = useState<Post>({
@@ -27,44 +28,50 @@ const AddForm = () => {
     const date = new Date().getTime().toString();
 
     const newPost = {
-        title: post.title,
-        message: post.message,
-        date: date,
-        postId: date,
-    }
-    try{
-        await axiosApi.post('posts.json', newPost);
-        navigate('/');
+      title: post.title,
+      message: post.message,
+      date: date,
+      postId: date,
+    };
+    try {
+      await axiosApi.post("posts.json", newPost);
+      navigate("/");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="container w-50 mx-auto mt-5">
-      <Form onSubmit={onSubmit}>
-        <Form.Group className="mb-3" controlId="formTitle">
-          <Form.Label>Post title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter title"
-            name="title"
-            required
-            onChange={onChange}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formText">
-          <Form.Label>Post text</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={4}
-            name="message"
-            required
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" className="px-4">Add</Button>
-      </Form>
+      {loading ? (
+        <Preloader />
+      ) : (
+        <Form onSubmit={onSubmit}>
+          <Form.Group className="mb-3" controlId="formTitle">
+            <Form.Label>Post title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter title"
+              name="title"
+              required
+              onChange={onChange}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formText">
+            <Form.Label>Post text</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={4}
+              name="message"
+              required
+              onChange={onChange}
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit" className="px-4">
+            Add
+          </Button>
+        </Form>
+      )}
     </div>
   );
 };
