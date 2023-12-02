@@ -31,6 +31,7 @@ const AddForm = () => {
         title: post.title,
         message: post.message,
         date: date,
+        postId: date,
     }
     try{
         await axiosApi.post('posts.json', newPost);
